@@ -14,6 +14,14 @@ const navigation = [
     text: "Courses",
     link: "/admin/courses",
   },
+  {
+    text: "Module",
+    link: "/admin/module",
+  },
+  {
+    text: "Lecture",
+    link: "/admin/lecture",
+  },
 ];
 
 const AdminLayout = ({ children }) => {

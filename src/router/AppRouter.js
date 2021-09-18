@@ -29,6 +29,18 @@ const AppRouter = () => {
             path="/admin/createcourse"
             component={CreateCourse}
           />
+          <PrivateAdminRoute
+            path="/admin/courses"
+            component={AdminDashboard}
+          />
+           <PrivateAdminRoute
+            path="/admin/module"
+            component={CreateCourse}
+          />
+          <PrivateAdminRoute
+            path="/admin/lecture"
+            component={CreateCourse}
+          />
           <PrivateAdminRoute path="/admin/course/:id" component={AdminCourse} />
         </Switch>
       </div>
