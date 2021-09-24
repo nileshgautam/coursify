@@ -28,6 +28,7 @@ const CourseForm = ({ course = {}, handleSubmit }) => {
               "Build a complete understanding of Python from the ground up!",
             ],
           }}
+
           validate={(values) => {
             const errors = {};
             if (!values.title) {

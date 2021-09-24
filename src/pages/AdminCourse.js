@@ -16,7 +16,9 @@ const AdminCourse = (props) => {
   const history = useHistory();
   const fromAdmin =
     user.type === "admin" && history.location.pathname.startsWith("/admin");
+    
   const course = courses.find((course) => course._id === props.match.params.id);
+
   const [open, setOpen] = useState(false);
   const [activeId, setActiveId] = useState();
   const handleScroll = () => {
@@ -55,6 +57,7 @@ const AdminCourse = (props) => {
             modules: res.data.modules,
           });
         }
+        
         const res1 = await axios(newOptions);
         console.log(res1);
         if (res1.status === 200 || res1.status === 201) {

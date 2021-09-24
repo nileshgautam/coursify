@@ -9,6 +9,8 @@ import CreateCourse from "../pages/CreateCourse";
 import Home from "../pages/Home";
 import PrivateAdminRoute from "./PrivateAdminRoute";
 import PublicRoute from "./PublicRoute";
+import CreateModule from '../pages/CreateModule';
+import CreateLecture from '../pages/CreateLecture';
 
 const AppRouter = () => {
   return (
@@ -35,11 +37,11 @@ const AppRouter = () => {
           />
            <PrivateAdminRoute
             path="/admin/module"
-            component={CreateCourse}
+            component={CreateModule}
           />
           <PrivateAdminRoute
             path="/admin/lecture"
-            component={CreateCourse}
+            component={CreateLecture}
           />
           <PrivateAdminRoute path="/admin/course/:id" component={AdminCourse} />
         </Switch>

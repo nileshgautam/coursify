@@ -7,7 +7,7 @@ import moment from "moment";
 import { useHistory } from "react-router-dom";
 import { CoursifyContext } from "../../context/CoursifyContext";
 
-const Card = ({ course, shoverClass }) => {
+const CourseModuleCard = ({ course, shoverClass }) => {
   const history = useHistory();
   const { user } = useContext(CoursifyContext);
 
@@ -65,4 +65,4 @@ const Card = ({ course, shoverClass }) => {
   );
 };
 
-export default Card;
+export default CourseModuleCard;

@@ -14,6 +14,7 @@ const Jsx = () => {
   const [modules, dispatchModules] = useReducer(moduleReducer, []);
   const [lectures, dispatchLectures] = useReducer(lectureReducer, []);
   const [user, dispatchUser] = useReducer(userReducer, {});
+ 
   return (
     <SnackbarProvider>
       <CoursifyContext.Provider

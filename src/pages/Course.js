@@ -16,7 +16,7 @@ const Course = (props) => {
   const [activeId, setActiveId] = useState();
   const handleScroll = () => {
     const toggle = document.querySelector(".toggle");
-    const sticky = toggle.offsetTop;
+    const sticky = toggle && toggle.offsetTop ? toggle.offsetTop : 0 ;
     if (window.scrollY >= 50) {
       toggle.style.display = "block";
     } else {
