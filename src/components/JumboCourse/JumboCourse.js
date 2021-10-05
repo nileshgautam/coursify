@@ -12,6 +12,8 @@ import Ratings from "../Ratings/Ratings";
 import "./jumbo-course.css";
 
 const JumboCourse = ({ course, handleOpen }) => {
+
+  // console.log('course',course)
   return (
     <div className="jumbo-course pb-8 pt-4">
       <div className="lg:grid lg:grid-cols-2 gap-x-10">

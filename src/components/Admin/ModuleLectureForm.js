@@ -1,13 +1,32 @@
-import React,{useContext} from "react";
-import { CoursifyContext } from "../../context/CoursifyContext";
+import React, { useState } from "react";
+// import { CoursifyContext } from "../../context/CoursifyContext";
 import { Formik } from "formik";
 import SubmitButton from "../Burron/SubmitButton";
 import FormField from "../FormField/FormField";
 import MySelect from "../CourseDDL/Select";
 import Dropdown from "../Dropdown/Dropdown";
+import axios from "axios";
 
 const ModuleLectureForm = ({ modulelecture = {}, handleSubmit }) => {
-  const { courses } = useContext(CoursifyContext);
+  const [modules, setmodules] = useState([]);
+  const coursify = JSON.parse(localStorage.getItem('coursify'));
+
+  const fetchModule = async (value) => {
+    // var token = "";
+    if (coursify) {
+      // let token = coursify.token;
+    }
+    const options = {
+      method: "GET",
+      url: `${process.env.REACT_APP_API}/modules/${value}`,
+    };
+    try {
+      const res = await axios(options);
+      setmodules(res.data.modules);
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   return (
     <div>
@@ -16,19 +35,26 @@ const ModuleLectureForm = ({ modulelecture = {}, handleSubmit }) => {
         <Formik
           initialValues={{
             title: "",
-            courseId: "",
-            moduleId: "",
-            thumbnail:"",
-            video:"",
-         
+            course: "",
+            module: "",
+            thumbnail: "",
+            video: "",
           }}
           validate={(values) => {
             const errors = {};
-            if (!values.courseId) {
-              errors.courseId = "Required";
-            }
             if (!values.title) {
               errors.title = "Required";
+            }
+            if (!values.course) {
+              errors.courseId = "Required";
+            }
+            if (!values.module) {
+              errors.title = "Required";
+            } if (!values.thumbnail) {
+              errors.thumbnail = "Required";
+            }
+            if (!values.video) {
+              errors.video = "Required";
             }
             return errors;
           }}
@@ -36,7 +62,6 @@ const ModuleLectureForm = ({ modulelecture = {}, handleSubmit }) => {
           onSubmit={(values) => {
             handleSubmit && handleSubmit(values)
           }}
-
         >
           {({
             values,
@@ -51,20 +76,19 @@ const ModuleLectureForm = ({ modulelecture = {}, handleSubmit }) => {
                 <MySelect
                   type="course"
                   name="course"
-                  onChange={handleChange}
-                  value={values.courseId}
+                  value={values.course}
                   label="Course:"
                   placeholder="Course"
+                  fetchModule={fetchModule}
                 />
-                <Dropdown 
-                 type="module"
-                 name="module"
-                 handleChange={handleChange}
-                //  onChange={handleChange}
-                 value={values.moduleId}
-                 option={courses}
-                 label="Module:"
-                 placeholder="Module"
+                <Dropdown
+                  type="module"
+                  name="module"
+                  handleChange={handleChange}
+                  value={values.module}
+                  label="Module:"
+                  placeholder="Module"
+                  modules={modules}
                 />
                 <FormField
                   type="title"
@@ -75,9 +99,27 @@ const ModuleLectureForm = ({ modulelecture = {}, handleSubmit }) => {
                   label="Title:"
                   placeholder="Title"
                 />
+                <FormField
+                  type="thumbnail"
+                  name="thumbnail"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.thumbnail}
+                  label="Thumbnail URL:"
+                  placeholder="Thumbnail"
+                />
+                <FormField
+                  type="video"
+                  name="video"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.video}
+                  label="Video URL:"
+                  placeholder="Video URL"
+                />
               </div>
               <div className="mt-3">
-                <SubmitButton type="submit">Save Module</SubmitButton>
+                <SubmitButton type="submit">Save Lecture</SubmitButton>
               </div>
             </form>
           )}

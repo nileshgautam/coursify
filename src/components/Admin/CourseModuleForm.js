@@ -47,6 +47,7 @@ const CourseModuleForm = ({ coursemodule = {}, handleSubmit }) => {
                   value={values.course}
                   label="Course:"
                   placeholder="Course"
+                  fetchModule={()=>{}}
                 />
                 <FormField
                   type="title"

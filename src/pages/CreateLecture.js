@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import ModuleLectureForm from "../components/Admin/ModuleLectureForm";
 import AdminLayout from "../components/Admin/Layout";
-import { CoursifyContext } from "../context/CoursifyContext";
+// import { CoursifyContext } from "../context/CoursifyContext";
 import { useHistory } from "react-router-dom";
 import { useSnackbar } from "react-simple-snackbar";
 import axios from "axios";
@@ -24,14 +24,13 @@ const optionsSnack = {
 
 const CreateLecture = (props) => {
   const [openSnackbar] = useSnackbar(optionsSnack);
-  const { dispatchCourses } = useContext(CoursifyContext);
+  // const { dispatchCourses } = useContext(CoursifyContext);
   const history = useHistory();
   const coursify = JSON.parse(localStorage.getItem("coursify"));
-  const addModule = async (values) => {
-    console.log('value:',values)
+  const addLecture = async (values) => {
     const options = {
       method: "POST",
-      url: `${process.env.REACT_APP_API}/admin/module/${values.course}`,
+      url: `${process.env.REACT_APP_API}/admin/lecture/${values.module}`,
       data: values,
       headers: {
         "Content-Type": "application/json",
@@ -40,13 +39,14 @@ const CreateLecture = (props) => {
     };
     try {
       const res = await axios(options);
+      console.log(res)
       if (res.data.status === 200 || res.data.status === 201) {
-        openSnackbar("Module Added");
-        dispatchCourses({
-          type: "ADD_COURSE",
-          course: res.data.course,
-        });
-        history.push("/admin/module");
+        openSnackbar("Lecture Added");
+        // dispatchCourses({
+        //   type: "ADD_MODULE",
+        //   course: res.data.course,
+        // });
+        history.push("/admin/lecture");
         return;
       }
       openSnackbar(res.data.msg);
@@ -54,13 +54,12 @@ const CreateLecture = (props) => {
 
       console.log(e);
       
-      // openSnackbar("Something went wrong");
+      openSnackbar("Something went wrong");
     }
   };
   return (
     <AdminLayout>
-      <h1>Q</h1>
-      <ModuleLectureForm handleSubmit={addModule} />
+      <ModuleLectureForm handleSubmit={addLecture} />
     </AdminLayout>
   );
 };

@@ -13,7 +13,9 @@ import { CoursifyContext } from "../context/CoursifyContext";
 const AdminCourse = (props) => {
   const { courses, dispatchModules, lectures, dispatchLectures, user } =
     useContext(CoursifyContext);
+
   const history = useHistory();
+
   const fromAdmin =
     user.type === "admin" && history.location.pathname.startsWith("/admin");
     
@@ -21,10 +23,11 @@ const AdminCourse = (props) => {
 
   const [open, setOpen] = useState(false);
   const [activeId, setActiveId] = useState();
+
   const handleScroll = () => {
     if (!fromAdmin) {
       const toggle = document.querySelector(".toggle");
-      const sticky = toggle.offsetTop;
+     const sticky = toggle && toggle.offsetTop ? toggle.offsetTop : 0 ;
       if (window.scrollY >= 50) {
         toggle.style.display = "block";
       } else {
@@ -37,49 +40,58 @@ const AdminCourse = (props) => {
       }
     }
   };
+  const fetchContent = async () => {
+    const options = {
+      method: "GET",
+      url: `${process.env.REACT_APP_API}/modules/${props.match.params.id}`,
+    };
+    const newOptions = {
+      method: "GET",
+      url: `${process.env.REACT_APP_API}/lectures/${props.match.params.id}`,
+    };
+    try {
+      const res = await axios(options);
+      // console.log(res);
+      if (res.status === 200 || res.status === 201) {
+        // setModel(res.data.modules);
+        dispatchModules({
+          type: "SET_MODULES",
+          modules: res.data.modules,
+        });
+      }
+      const res1 = await axios(newOptions);
+      if (res1.status === 200 || res1.status === 201) {
+        // console.log(res1)
+        // setLecture(res1.data.lectures);
+        dispatchLectures({
+          type: "SET_LECTURES",
+          lectures: res1.data.lectures,
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  // Use effect
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
-    const fetchContent = async () => {
-      const options = {
-        method: "GET",
-        url: `${process.env.REACT_APP_API}/modules/${props.match.params.id}`,
-      };
-      const newOptions = {
-        method: "GET",
-        url: `${process.env.REACT_APP_API}/lectures/${props.match.params.id}`,
-      };
-      try {
-        const res = await axios(options);
-        console.log(res);
-        if (res.status === 200 || res.status === 201) {
-          dispatchModules({
-            type: "SET_MODULES",
-            modules: res.data.modules,
-          });
-        }
-        
-        const res1 = await axios(newOptions);
-        console.log(res1);
-        if (res1.status === 200 || res1.status === 201) {
-          dispatchLectures({
-            type: "SET_LECTURES",
-            lectures: res1.data.lectures,
-          });
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fetchContent();
+  
+    if (lectures.length === 0) {
+      fetchContent();
+    }
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [dispatchLectures, dispatchModules, handleScroll]);
+  }, [handleScroll, fetchContent]);
+
 
   const handleOpen = (id) => {
     setActiveId(id);
     setOpen(true);
   };
+
+
   const handleClose = () => setOpen(false);
 
   return (
@@ -98,7 +110,7 @@ const AdminCourse = (props) => {
           <LearningOutcome course={course} />
         </div>
         <div className="my-5">
-          <CourseContent handleOpen={handleOpen} />
+          <CourseContent handleOpen={handleOpen}  />
         </div>
         <div className="my-5">
           <CourseDescription description={course.info} />
