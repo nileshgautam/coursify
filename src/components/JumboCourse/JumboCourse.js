@@ -29,12 +29,12 @@ const JumboCourse = ({ course, handleOpen }) => {
           <p className="heading4 bold mb-1">{course.title}</p>
           <p className="sub-heading medium mb-5">{course.description}</p>
           <div className="flex items-center gap-x-2 paragraph2 light mb-2">
-            <p className="jumbo-rating">{course.rating}</p>
+            {/* <p className="jumbo-rating">{course.rating}</p>
             <p>
               <Ratings rating={course.rating} />
             </p>
             <p className="jumbo-rating-count">({course.ratingCount} ratings)</p>
-            <p>1,325,864 students</p>
+            <p>1,325,864 students</p> */}
           </div>
           <p className="paragraph2 light">
             Created by{" "}

@@ -4,7 +4,7 @@ import "./course-content.css";
 import { CoursifyContext } from "../../context/CoursifyContext";
 const CourseContent = ({handleOpen}) => {
   const { modules, lectures } = useContext(CoursifyContext);
-  console.log('module', modules);
+  // console.log('module', modules);
   // console.log('lectures', lectures);
 
   return (

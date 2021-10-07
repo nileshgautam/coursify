@@ -4,15 +4,10 @@ import React, { useState } from "react";
 import "./preview-model.css";
 
 const PreviewModel = ({ courseContent, handleClose, activeId }) => {
-  console.log(courseContent);
   const activeCourse = courseContent.find((single) => single._id === activeId);
-
-  console.log(activeCourse);
-
   const [content, setContent] = useState(
     activeCourse !== undefined ? activeCourse : courseContent[0]
   );
-
   return (
     <div className="preview-model flex items-center justify-center">
       <div className="flex flex-col gap-y-3">

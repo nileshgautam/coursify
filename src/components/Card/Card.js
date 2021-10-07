@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import "./card.css";
-import Ratinings from "../Ratings/Ratings";
+// import Ratinings from "../Ratings/Ratings";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
@@ -10,7 +10,6 @@ import { CoursifyContext } from "../../context/CoursifyContext";
 const Card = ({ course, shoverClass }) => {
   const history = useHistory();
   const { user } = useContext(CoursifyContext);
-
   const fromAdmin =
     history.location.pathname.startsWith("/admin") && user.type === "admin";
   return (
@@ -33,9 +32,9 @@ const Card = ({ course, shoverClass }) => {
         <p className="paragraph1 bold card-title mb-1 mt-2">{course.title}</p>
         <p className="paragraph3 card-subtitle light">{course.author}</p>
         <div className="flex items-center">
-          <p className="paragraph2 regular mr-1 rating">{course.rating}</p>
+          {/* <p className="paragraph2 regular mr-1 rating">{course.rating}</p>
           <Ratinings rating={course.rating} />
-          <p className="caption regular count ml-1">({course.ratingCount})</p>
+          <p className="caption regular count ml-1">({course.ratingCount})</p> */}
         </div>
       </div>
       {course.best && (

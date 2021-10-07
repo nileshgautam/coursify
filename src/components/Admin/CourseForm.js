@@ -1,10 +1,15 @@
 import { Formik } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import SubmitButton from "../Burron/SubmitButton";
 import FormField from "../FormField/FormField";
 import RichtextEditor from "../TextEditor/RichTextEditor";
+import CourseKeyFeatures from "../CourseKeyFeatures/CourseKeyFeatures";
 
 const CourseForm = ({ course = {}, handleSubmit }) => {
+  const [keyList, setkeylist] = useState([]);
+  const setLearning = (coursekey) => {
+    setkeylist({ ...keyList, coursekey });
+  }
   return (
     <div>
       <p className="heading5 bold mb-5">Add Course</p>
@@ -17,16 +22,7 @@ const CourseForm = ({ course = {}, handleSubmit }) => {
             authorInfo: "",
             info: "",
             picture: "",
-            learnings: [
-              "Learn to use Python professionally, learning both Python 2 and Python 3!",
-              "Create games with Python, like Tic Tac Toe and Blackjack!",
-              "Learn advanced Python features, like the collections module and how to work with timestamps!",
-              "Learn to use Object Oriented Programming with classes!",
-              "Understand complex topics, like decorators.",
-              "Understand how to use both the Jupyter Notebook and create .py files",
-              "Get an understanding of how to create GUIs in the Jupyter Notebook system!",
-              "Build a complete understanding of Python from the ground up!",
-            ],
+            learnings: keyList,
           }}
 
           validate={(values) => {
@@ -51,7 +47,7 @@ const CourseForm = ({ course = {}, handleSubmit }) => {
             }
             return errors;
           }}
-          onSubmit={(values) => handleSubmit(values)}
+          onSubmit={(values) =>handleSubmit(values)}
         >
           {({
             values,
@@ -60,6 +56,7 @@ const CourseForm = ({ course = {}, handleSubmit }) => {
             handleChange,
             handleBlur,
             handleSubmit,
+            setFieldValue
           }) => (
             <form onSubmit={handleSubmit}>
               <div className="grid sm:grid-cols-2 xs:grid-cols-1 gap-x-2 gap-y-2">
@@ -110,6 +107,12 @@ const CourseForm = ({ course = {}, handleSubmit }) => {
                   value={values.authorInfo}
                   label="Author's Info:"
                   placeholder="Give Info"
+                />
+                <CourseKeyFeatures
+                  data={values.learnings}
+                  // setValue={setValue}    
+                  placeholder="Add Key Features..."
+                  setLearning={setFieldValue}
                 />
               </div>
               <div className="mt-3">
